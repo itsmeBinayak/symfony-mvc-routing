@@ -5,29 +5,65 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class LearningController extends AbstractController
 {
-    #[Route('/', name: 'learning')]
-    public function index(): Response
+    // #[Route('/', name: 'learning')]
+    // public function index(): Response
+    // {
+    //     return $this->render('learning/index.html.twig', [
+    //         'controller_name' => 'LearningController',
+    //     ]);
+    // }
+    /**
+    * @Route("/about", name="aboutMe")
+    * @param SessionInterface $session
+    * @return RedirectResponse
+    */
+    public function aboutme(SessionInterface $session): Response
     {
-        return $this->render('learning/index.html.twig', [
-            'controller_name' => 'LearningController',
-        ]);
-    }
-    #[Route('/about', name: 'aboutme')]
-    public function aboutme(): Response
-    {
-        return $this->render('learning/index.html.twig', [
-            'name' => 'Becode',
+        if ($session->get('name')) {
+            $name = $session->get('name');
+        }
+        else {
+            $response = $this->forward('App/Controller/LearningController::showMyName');
+            return $response;
+        }
+        return $this->render('learning/about.html.twig', [
+            'name' => $name,
         ]);
     }
 
-    #[Route('/', name: 'showName')]
-    public function showMyName(): Response
+    /**
+    * @Route("/", name="showMyName")
+    * @param SessionInterface $session
+    * @return RedirectResponse
+    */
+    public function showMyName(SessionInterface $session): Response
     {
-        return $this->render('learning/index.html.twig', [
-            'name' => 'Becode',
+        if ($session->get('name')) {
+            $name = $session->get('name');
+        }
+        else {
+            $name = 'unknown';
+        }
+        return $this->render('learning/showName.html.twig', [
+            'name' => $name,
         ]);
+    }
+
+    /**
+    * @Route("/changeName", name="changeName")
+    * @param SessionInterface $session
+    * @return RedirectResponse
+    */
+    public function changeMyName(SessionInterface $session, Request $request): RedirectResponse
+    {
+        $name = $request->request->get('name');
+        $session->set('name',$name);
+        return $this->redirectToRoute('showMyName');
     }
 }
