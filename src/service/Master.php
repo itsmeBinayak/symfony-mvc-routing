@@ -8,7 +8,6 @@ class Master{
 
     private Transform $transform;
     private Logger $logger;
-    private string $msg;
 
     public function __construct(Transform $transform,Logger $logger)
     {

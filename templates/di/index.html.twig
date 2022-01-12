@@ -3,8 +3,13 @@
 {% block title %}Hello DiController!{% endblock %}
 
 {% block body %}
+{{msg}}
 <form action ="{{path('di')}}" method="post">
     Message: <input type="text" name="msg">
+    <select name="transformMethod">
+    <option value="Capitalize">Capitalize</option>
+    <option value="Dash">Dash</option>
+    </select>
     <input type="submit" name="submit" value="submit">
     </form>
 {% endblock %}
