@@ -1,10 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello LearningController!{% endblock %}
-
+   {%block menu%}
+      <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{path('showMyName')}}">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{path('aboutMe')}}">About</a>
+                    
+                    Europe: {{ date('now')|format_date(pattern="d/M/y") }}<br><br>
+                    America: {{ date('now')|format_date(pattern="M/d/y") }}<br><br>
+                    China & Japan: {{ date('now')|format_date(pattern="y/M/d") }}
+                </div>     
+            </div>
+    </div>
+  {% endblock %}
 {% block body %}
 
     <h1>Hello, its me {{name}}! </h1>
-    <a href="{{path('showMyName')}}"> Home</a>
-    
+    {{generateQuote()}}
+
 {% endblock %}
