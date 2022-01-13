@@ -9,7 +9,7 @@
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                    <h1>Hello {{name|capitalize}}! </h1>
+                    <h1>Hello {{name|title}}! </h1>
                     <form action ="{{path('changeName')}}" method="post">
                     <input class="form-control-md" type="text" name="name">
                     <input class="btn btn-primary " type="submit" name="submit" value="submit">
