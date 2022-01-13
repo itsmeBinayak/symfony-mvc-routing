@@ -27,6 +27,7 @@ class LearningController extends AbstractController
     {
         if ($session->get('name')) {
             $name = $session->get('name');
+            
         }
         else {
             $response = $this->forward('App/Controller/LearningController::showMyName');
